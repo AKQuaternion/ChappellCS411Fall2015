@@ -98,7 +98,7 @@ int main()
             break;
         }
 
-        // Print solutions to n-Queens Problem
+        // Print number and its factorial
         cout << endl;
         uint64_t nn = static_cast<uint64_t>(n);
         uint64_t fact = factorial(nn);
