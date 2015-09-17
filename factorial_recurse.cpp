@@ -13,33 +13,43 @@ using std::cin;
 using std::exit;
 #include <string>
 using std::string;
+using std::getline;
 #include <sstream>
 using std::istringstream;
 #include <cstdint>
-using std::uint64_t;
+using std::uint_fast64_t;
+
+
+// Type unum
+// Type of values used for large-ish integer computation.
+// Should be an unsigned integer type.
+typedef uint_fast64_t unum;  // >= 64 bits, fast, unsigned
 
 
 // factorial
 // Pre:
-//     n! can be represented as a 64-bit unsigned integer (so n <= 20).
+//     n >= 0.
+//     n! is a value unum value.
+// For 64-bit unsigned, preconditions hold if 0 <= n <= 20.
 // Post:
 //     Return is n!.
 // Recursive.
-uint64_t factorial(uint64_t n)
+// Does not throw.
+unum factorial(int n)
 {
     // BASE CASE
-    if (n == static_cast<uint64_t>(0))
-        return static_cast<uint64_t>(1);
+    if (n == 0)
+        return static_cast<unum>(1);
 
     // RECURSIVE CASE
-    return n * factorial(n-static_cast<uint64_t>(1));
+    return static_cast<unum>(n) * factorial(n-1);
 }
 
 
 // getNum
 // Prints prompt to cout and then inputs a number of type int on a line
 // from cin. Repeats until valid number obtained; returns it to caller
-// in reference argument. Return value is false if number could not be
+// in reference argument. Return is false if number could not be
 // obtained.
 bool getNum(const string & prompt,
             int & num)
@@ -68,7 +78,7 @@ bool getNum(const string & prompt,
 // main
 // Repeatedly inputs a number n and prints n! (factorial).
 // Terminates on n < 0.
-// Uses getNum.
+// Uses getNum, factorial.
 int main()
 {
     // Print header
@@ -100,8 +110,7 @@ int main()
 
         // Print number and its factorial
         cout << endl;
-        uint64_t nn = static_cast<uint64_t>(n);
-        uint64_t fact = factorial(nn);
+        unum fact = factorial(n);
         cout << n << "! = " << fact << endl;
         cout << endl;
     }
