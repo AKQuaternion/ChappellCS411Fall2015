@@ -27,13 +27,13 @@ typedef uint_fast64_t unum;  // >= 64 bits, fast, unsigned
 
 
 // factorial
+// Recursive.
 // Pre:
 //     n >= 0.
 //     n! is a value unum value.
 // For 64-bit unsigned, preconditions hold if 0 <= n <= 20.
 // Post:
 //     Return is n!.
-// Recursive.
 // Does not throw.
 unum factorial(int n)
 {
