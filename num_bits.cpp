@@ -21,6 +21,7 @@ using std::istringstream;
 // numBits
 // Count number of bits in binary representation of a positive integer.
 // Based on algorithm BinRec from Levitin p. 75.
+// Recursive.
 // Pre:
 //     n >= 1.
 // Post:
