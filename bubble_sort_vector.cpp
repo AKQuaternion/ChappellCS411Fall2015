@@ -1,4 +1,4 @@
-// bubble_sort_vector.cpp  UNFINISHED
+// bubble_sort_vector.cpp
 // Glenn G. Chappell
 // 21 Sep 2015
 //
@@ -41,6 +41,8 @@ void bubbleSortVector(vector<T> & v)
     {
         // Do one Bubble Sort pass on v[0 .. n-pass-1],
         //  that is, on pairs from 0,1 up to n-pass-2,n-pass-1
+        bool swapped = false;  // True if any swaps during this pass
+
         for (size_t j = 0; j <= n-pass-2; ++j)
             // v[j], v[j+1] are current pair
         {
@@ -48,8 +50,15 @@ void bubbleSortVector(vector<T> & v)
             if (v[j+1] < v[j])  // Out of order?
             {
                 swap(v[j], v[j+1]);
+                swapped = true;
             }
         }
+
+        // If no swaps, then array is sorted; we're done
+        // (This optimization is not mentioned in section 3.1
+        //  of the Levitin text)
+        if (!swapped)
+            break;
     }
 }
 
