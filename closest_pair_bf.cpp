@@ -1,4 +1,4 @@
-// closest_pair_bf.cpp  UNFINISHED
+// closest_pair_bf.cpp
 // Glenn G. Chappell
 // 23 Sep 2015
 //
@@ -115,18 +115,43 @@ void printPair(const vector<Pt2> & pts,
 }
 
 
-// bfClosestPair
+// closestPair_bf
 // Given vector of Pt2 objects, returns a std::pair holding the indices
 //  of a closest pair of distinct points.
 // Uses brute-force method.
 // Pre:
 //     pts.size() >= 2.
-pair<size_t, size_t> bfClosestPair(const vector<Pt2> & pts)
+pair<size_t, size_t> closestPair_bf(const vector<Pt2> & pts)
 {
-    // WRITE THIS!!!
+    size_t n = pts.size();  // Number of pts in dataset
+    assert(n >= 2);
+
+    pair<size_t, size_t> closepair(0, 1);
+                            // Indices of 2 closest pts so far
+    double mindist = dist(pts[0], pts[1]);
+                            // Their distance
+
+    // Loop through all pairs of indices i,j with 0 <= i < j < n
+    for (size_t i = 0; i < n; ++i)
+    {
+        for (size_t j = i+1; j < n; ++j)
+        {
+            // Find distance of current pair
+            double d = dist(pts[i], pts[j]);
+
+            // Is this pair closer than best so far?
+            if (d < mindist)
+            {
+                // Found closer pair; save it
+                closepair.first = i;
+                closepair.second = j;
+                mindist = d;
+            }
+        }
+    }
 
     // Return indices of closest pair as std::pair<size_t,size_t>
-    return make_pair(size_t(0), size_t(1));  // DUMMY RETURN
+    return closepair;
 }
 
 
@@ -172,7 +197,7 @@ int main()
 
     // Print closest pair (Brute-Force method)
     cout << "Closest pair (Brute-Force method):" << endl;
-    auto closest_bf = bfClosestPair(pts);
+    auto closest_bf = closestPair_bf(pts);
     printPair(pts, closest_bf);
 
     cout << "Press ENTER to quit ";
