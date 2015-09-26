@@ -15,11 +15,11 @@ using std::cin;
 using std::vector;
 #include <utility>
 using std::pair;
-using std::make_pair;
 #include <cmath>
 using std::sqrt;
-#include <cstdlib>
+#include <cstddef>
 using std::size_t;
+#include <cstdlib>
 using std::exit;
 #include <string>
 using std::string;
@@ -200,6 +200,7 @@ int main()
     auto closest_bf = closestPair_bf(pts);
     printPair(pts, closest_bf);
 
+    // Wait for user
     cout << "Press ENTER to quit ";
     while (cin.get() != '\n') ;
 
