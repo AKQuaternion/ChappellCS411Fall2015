@@ -55,9 +55,10 @@ void selectionSortVector(vector<T> & v)
 
 
 // Main program
-// Demonstrates use of function selectionSortVector
+// Demonstrates use of function selectionSortVector.
 int main()
 {
+    // Set up data to sort
     vector<int> v { 5, 3, 2, 8, 5, 9, 10, 4, 6, 1, -4 };
 
     // Print unaltered data
