@@ -1,6 +1,8 @@
 // build_test.cpp
+// VERSION 2
 // Glenn G. Chappell
 // 29 Sep 2015
+// Updated: 1 Oct 2015
 //
 // For CS 411/611 Fall 2015
 // Test program for function build
@@ -498,7 +500,7 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 2, 13 });
+        bs.push_back(Brg { 0, 2, 13 });
         ans = 13;
         test_build_single(t, w, e, cbs, ans,
             "1 bridge");
@@ -509,8 +511,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 0, 6 });
-        bs.push_back(Bridge { 3, 4, 5 });
+        bs.push_back(Brg { 2, 0, 6 });
+        bs.push_back(Brg { 3, 4, 5 });
         ans = 11;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, non-crossing");
@@ -521,8 +523,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 0, 8 });
-        bs.push_back(Bridge { 2, 3, 4 });
+        bs.push_back(Brg { 2, 0, 8 });
+        bs.push_back(Brg { 2, 3, 4 });
         ans = 8;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common west city, N is best");
@@ -533,8 +535,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 3, 4 });
-        bs.push_back(Bridge { 2, 0, 8 });
+        bs.push_back(Brg { 2, 3, 4 });
+        bs.push_back(Brg { 2, 0, 8 });
         ans = 8;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common west city, N is best (reordered)");
@@ -545,8 +547,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 0, 2 });
-        bs.push_back(Bridge { 2, 3, 6 });
+        bs.push_back(Brg { 2, 0, 2 });
+        bs.push_back(Brg { 2, 3, 6 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common west city, S is best");
@@ -557,8 +559,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 3, 6 });
-        bs.push_back(Bridge { 2, 0, 2 });
+        bs.push_back(Brg { 2, 3, 6 });
+        bs.push_back(Brg { 2, 0, 2 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common west city, S is best (reordered)");
@@ -569,8 +571,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 1, 3, 5 });
-        bs.push_back(Bridge { 2, 3, 2 });
+        bs.push_back(Brg { 1, 3, 5 });
+        bs.push_back(Brg { 2, 3, 2 });
         ans = 5;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common east city, N is best");
@@ -581,8 +583,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 3, 2 });
-        bs.push_back(Bridge { 1, 3, 5 });
+        bs.push_back(Brg { 2, 3, 2 });
+        bs.push_back(Brg { 1, 3, 5 });
         ans = 5;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common east city, N is best (reordered)");
@@ -593,8 +595,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 3, 1 });
-        bs.push_back(Bridge { 1, 3, 7 });
+        bs.push_back(Brg { 0, 3, 1 });
+        bs.push_back(Brg { 1, 3, 7 });
         ans = 7;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common east city, S is best");
@@ -605,8 +607,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 3, 1 });
-        bs.push_back(Bridge { 1, 3, 7 });
+        bs.push_back(Brg { 0, 3, 1 });
+        bs.push_back(Brg { 1, 3, 7 });
         ans = 7;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, common east city, S is best (reordered)");
@@ -617,8 +619,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 2, 5 });
-        bs.push_back(Bridge { 0, 2, 5 });
+        bs.push_back(Brg { 0, 2, 5 });
+        bs.push_back(Brg { 0, 2, 5 });
         ans = 5;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, identical");
@@ -629,8 +631,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 2, 5 });
-        bs.push_back(Bridge { 0, 2, 6 });
+        bs.push_back(Brg { 0, 2, 5 });
+        bs.push_back(Brg { 0, 2, 6 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, same cities, different tolls (reordered)");
@@ -641,8 +643,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 2, 6 });
-        bs.push_back(Bridge { 0, 2, 5 });
+        bs.push_back(Brg { 0, 2, 6 });
+        bs.push_back(Brg { 0, 2, 5 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, same cities, different tolls");
@@ -653,8 +655,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 1, 6 });
-        bs.push_back(Bridge { 2, 0, 5 });
+        bs.push_back(Brg { 0, 1, 6 });
+        bs.push_back(Brg { 2, 0, 5 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, crossing, NW-SE is best");
@@ -665,8 +667,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 0, 5 });
-        bs.push_back(Bridge { 0, 1, 6 });
+        bs.push_back(Brg { 2, 0, 5 });
+        bs.push_back(Brg { 0, 1, 6 });
         ans = 6;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, crossing, NW-SE is best (reordered)");
@@ -677,8 +679,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 0, 1, 5 });
-        bs.push_back(Bridge { 2, 0, 7 });
+        bs.push_back(Brg { 0, 1, 5 });
+        bs.push_back(Brg { 2, 0, 7 });
         ans = 7;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, crossing, SW-NE is best");
@@ -689,8 +691,8 @@ void test_build_tiny(Tester & t)
         w = 5;
         e = 5;
         bs.clear();
-        bs.push_back(Bridge { 2, 0, 7 });
-        bs.push_back(Bridge { 0, 1, 5 });
+        bs.push_back(Brg { 2, 0, 7 });
+        bs.push_back(Brg { 0, 1, 5 });
         ans = 7;
         test_build_single(t, w, e, cbs, ans,
             "2 bridges, crossing, SW-NE is best (reordered)");
@@ -710,21 +712,21 @@ void test_build_small(Tester & t)
     std::cout << "Test Suite: function build - small examples"
               << std::endl;
 
-    std::vector<Bridge> bs;               // Bridge descriptions
-    const std::vector<Bridge> & cbs(bs);  // Const ref to above
-    int w;                                // Number of west cities
-    int e;                                // Number of west cities
-    int ans;                              // Desired answer
+    std::vector<Brg> bs;               // Bridge descriptions
+    const std::vector<Brg> & cbs(bs);  // Const ref to above
+    int w;                             // Number of west cities
+    int e;                             // Number of west cities
+    int ans;                           // Desired answer
 
     // Example #1 from assignment description
     {
         w = 3;
         e = 3;
         bs.clear();
-        bs.push_back(Bridge { 0, 1, 3 });
-        bs.push_back(Bridge { 1, 1, 5 });
-        bs.push_back(Bridge { 1, 2, 4 });
-        bs.push_back(Bridge { 2, 0, 8 });
+        bs.push_back(Brg { 0, 1, 3 });
+        bs.push_back(Brg { 1, 1, 5 });
+        bs.push_back(Brg { 1, 2, 4 });
+        bs.push_back(Brg { 2, 0, 8 });
         ans = 8;
         test_build_single(t, w, e, cbs, ans,
             "Example #1 from assignment description");
@@ -735,11 +737,11 @@ void test_build_small(Tester & t)
         w = 3;
         e = 3;
         bs.clear();
-        bs.push_back(Bridge { 0, 1, 3 });
-        bs.push_back(Bridge { 1, 1, 5 });
-        bs.push_back(Bridge { 1, 2, 4 });
-        bs.push_back(Bridge { 2, 0, 8 });
-        bs.push_back(Bridge { 2, 2, 6 });
+        bs.push_back(Brg { 0, 1, 3 });
+        bs.push_back(Brg { 1, 1, 5 });
+        bs.push_back(Brg { 1, 2, 4 });
+        bs.push_back(Brg { 2, 0, 8 });
+        bs.push_back(Brg { 2, 2, 6 });
         ans = 11;
         test_build_single(t, w, e, cbs, ans,
             "Example #2 from assignment description");
@@ -750,11 +752,11 @@ void test_build_small(Tester & t)
         w = 3;
         e = 3;
         bs.clear();
-        bs.push_back(Bridge { 0, 0, 4 });
-        bs.push_back(Bridge { 1, 0, 4 });
-        bs.push_back(Bridge { 2, 0, 4 });
-        bs.push_back(Bridge { 2, 1, 4 });
-        bs.push_back(Bridge { 2, 2, 4 });
+        bs.push_back(Brg { 0, 0, 4 });
+        bs.push_back(Brg { 1, 0, 4 });
+        bs.push_back(Brg { 2, 0, 4 });
+        bs.push_back(Brg { 2, 1, 4 });
+        bs.push_back(Brg { 2, 2, 4 });
         ans = 8;
         test_build_single(t, w, e, cbs, ans,
             "3 cities each side, not all joinable");
@@ -765,12 +767,12 @@ void test_build_small(Tester & t)
         w = 3;
         e = 3;
         bs.clear();
-        bs.push_back(Bridge { 0, 0, 4 });
-        bs.push_back(Bridge { 1, 0, 4 });
-        bs.push_back(Bridge { 2, 0, 4 });
-        bs.push_back(Bridge { 2, 1, 4 });
-        bs.push_back(Bridge { 2, 2, 4 });
-        bs.push_back(Bridge { 1, 1, 4 });
+        bs.push_back(Brg { 0, 0, 4 });
+        bs.push_back(Brg { 1, 0, 4 });
+        bs.push_back(Brg { 2, 0, 4 });
+        bs.push_back(Brg { 2, 1, 4 });
+        bs.push_back(Brg { 2, 2, 4 });
+        bs.push_back(Brg { 1, 1, 4 });
         ans = 12;
         test_build_single(t, w, e, cbs, ans,
             "3 cities each side, all joinable");
@@ -790,11 +792,11 @@ void test_build_medium(Tester & t)
     std::cout << "Test Suite: function build - medium examples"
               << std::endl;
 
-    std::vector<Bridge> bs;               // Bridge descriptions
-    const std::vector<Bridge> & cbs(bs);  // Const ref to above
-    int w;                                // Number of west cities
-    int e;                                // Number of west cities
-    int ans;                              // Desired answer
+    std::vector<Brg> bs;               // Brg descriptions
+    const std::vector<Brg> & cbs(bs);  // Const ref to above
+    int w;                             // Number of west cities
+    int e;                             // Number of west cities
+    int ans;                           // Desired answer
 
     // All bridges available #1
     {
@@ -803,7 +805,7 @@ void test_build_medium(Tester & t)
         bs.clear();
         for (int i = 0; i < w; ++i)
             for (int j = 0; j < e; ++j)
-                bs.push_back(Bridge { i, j, 3 });
+                bs.push_back(Brg { i, j, 3 });
         ans = w * 3;
         test_build_single(t, w, e, cbs, ans,
             "All bridges available #1");
@@ -816,7 +818,7 @@ void test_build_medium(Tester & t)
         bs.clear();
         for (int i = 0; i < w; ++i)
             for (int j = 0; j < e; ++j)
-                bs.push_back(Bridge { i, j, (i == j ? 3 : 5) });
+                bs.push_back(Brg { i, j, (i == j ? 3 : 5) });
         ans = (w-1) * 5;
         test_build_single(t, w, e, cbs, ans,
             "All bridges available #2");
@@ -829,7 +831,7 @@ void test_build_medium(Tester & t)
         bs.clear();
         for (int i = w-1; i >= 0; --i)
             for (int j = e-1; j >= 0; --j)
-                bs.push_back(Bridge { i, j, (-1 <= i-j && i-j <= 1 ? 3 : 7) });
+                bs.push_back(Brg { i, j, (-1 <= i-j && i-j <= 1 ? 3 : 7) });
         ans = (w-2) * 7;
         test_build_single(t, w, e, cbs, ans,
             "All bridges available #3");
@@ -840,22 +842,22 @@ void test_build_medium(Tester & t)
         w = 12;
         e = 12;
         bs.clear();
-        bs.push_back(Bridge {  2, 10,  5 });
-        bs.push_back(Bridge {  4,  0,  5 });
-        bs.push_back(Bridge {  1,  1,  7 });
-        bs.push_back(Bridge { 11,  2,  7 });
-        bs.push_back(Bridge {  2,  6,  5 });
-        bs.push_back(Bridge {  0,  5,  7 });
-        bs.push_back(Bridge {  7,  8,  5 });
-        bs.push_back(Bridge { 10,  1,  5 });
-        bs.push_back(Bridge {  8, 11,  7 });
-        bs.push_back(Bridge {  9,  3,  5 });
-        bs.push_back(Bridge {  3,  7,  7 });
-        bs.push_back(Bridge {  5,  4,  7 });
-        bs.push_back(Bridge {  8,  9,  7 });
-        bs.push_back(Bridge {  3,  7,  5 });
-        bs.push_back(Bridge {  6, 11,  5 });
-        bs.push_back(Bridge {  9,  4,  7 });
+        bs.push_back(Brg {  2, 10,  5 });
+        bs.push_back(Brg {  4,  0,  5 });
+        bs.push_back(Brg {  1,  1,  7 });
+        bs.push_back(Brg { 11,  2,  7 });
+        bs.push_back(Brg {  2,  6,  5 });
+        bs.push_back(Brg {  0,  5,  7 });
+        bs.push_back(Brg {  7,  8,  5 });
+        bs.push_back(Brg { 10,  1,  5 });
+        bs.push_back(Brg {  8, 11,  7 });
+        bs.push_back(Brg {  9,  3,  5 });
+        bs.push_back(Brg {  3,  7,  7 });
+        bs.push_back(Brg {  5,  4,  7 });
+        bs.push_back(Brg {  8,  9,  7 });
+        bs.push_back(Brg {  3,  7,  5 });
+        bs.push_back(Brg {  6, 11,  5 });
+        bs.push_back(Brg {  9,  4,  7 });
         ans = 31;
         test_build_single(t, w, e, cbs, ans,
             "Random #1");
@@ -866,22 +868,22 @@ void test_build_medium(Tester & t)
         w = 12;
         e = 12;
         bs.clear();
-        bs.push_back(Bridge {  4,  8,  2 });
-        bs.push_back(Bridge { 11,  6,  2 });
-        bs.push_back(Bridge {  2, 11,  4 });
-        bs.push_back(Bridge {  5,  7,  2 });
-        bs.push_back(Bridge {  9,  1,  4 });
-        bs.push_back(Bridge {  6,  4,  2 });
-        bs.push_back(Bridge {  0,  1,  4 });
-        bs.push_back(Bridge {  3,  5,  4 });
-        bs.push_back(Bridge {  4,  9,  4 });
-        bs.push_back(Bridge {  3, 10,  2 });
-        bs.push_back(Bridge {  8,  9,  2 });
-        bs.push_back(Bridge {  3,  2,  4 });
-        bs.push_back(Bridge {  8, 11,  2 });
-        bs.push_back(Bridge { 10,  2,  4 });
-        bs.push_back(Bridge {  1,  0,  2 });
-        bs.push_back(Bridge {  7,  7,  4 });
+        bs.push_back(Brg {  4,  8,  2 });
+        bs.push_back(Brg { 11,  6,  2 });
+        bs.push_back(Brg {  2, 11,  4 });
+        bs.push_back(Brg {  5,  7,  2 });
+        bs.push_back(Brg {  9,  1,  4 });
+        bs.push_back(Brg {  6,  4,  2 });
+        bs.push_back(Brg {  0,  1,  4 });
+        bs.push_back(Brg {  3,  5,  4 });
+        bs.push_back(Brg {  4,  9,  4 });
+        bs.push_back(Brg {  3, 10,  2 });
+        bs.push_back(Brg {  8,  9,  2 });
+        bs.push_back(Brg {  3,  2,  4 });
+        bs.push_back(Brg {  8, 11,  2 });
+        bs.push_back(Brg { 10,  2,  4 });
+        bs.push_back(Brg {  1,  0,  2 });
+        bs.push_back(Brg {  7,  7,  4 });
         ans = 16;
         test_build_single(t, w, e, cbs, ans,
             "Random #2");
@@ -892,22 +894,22 @@ void test_build_medium(Tester & t)
         w = 12;
         e = 12;
         bs.clear();
-        bs.push_back(Bridge {  7, 11,  6 });
-        bs.push_back(Bridge {  9,  4,  7 });
-        bs.push_back(Bridge {  6,  9,  7 });
-        bs.push_back(Bridge {  8,  1,  6 });
-        bs.push_back(Bridge {  0,  7,  6 });
-        bs.push_back(Bridge {  3,  6,  7 });
-        bs.push_back(Bridge {  5,  3,  6 });
-        bs.push_back(Bridge { 11,  2,  7 });
-        bs.push_back(Bridge { 10,  0,  7 });
-        bs.push_back(Bridge {  2,  7,  7 });
-        bs.push_back(Bridge {  1, 10,  7 });
-        bs.push_back(Bridge {  4,  9,  6 });
-        bs.push_back(Bridge {  5,  1,  6 });
-        bs.push_back(Bridge {  4,  2,  7 });
-        bs.push_back(Bridge {  8, 11,  6 });
-        bs.push_back(Bridge {  3,  8,  6 });
+        bs.push_back(Brg {  7, 11,  6 });
+        bs.push_back(Brg {  9,  4,  7 });
+        bs.push_back(Brg {  6,  9,  7 });
+        bs.push_back(Brg {  8,  1,  6 });
+        bs.push_back(Brg {  0,  7,  6 });
+        bs.push_back(Brg {  3,  6,  7 });
+        bs.push_back(Brg {  5,  3,  6 });
+        bs.push_back(Brg { 11,  2,  7 });
+        bs.push_back(Brg { 10,  0,  7 });
+        bs.push_back(Brg {  2,  7,  7 });
+        bs.push_back(Brg {  1, 10,  7 });
+        bs.push_back(Brg {  4,  9,  6 });
+        bs.push_back(Brg {  5,  1,  6 });
+        bs.push_back(Brg {  4,  2,  7 });
+        bs.push_back(Brg {  8, 11,  6 });
+        bs.push_back(Brg {  3,  8,  6 });
         ans = 26;
         test_build_single(t, w, e, cbs, ans,
             "Random #3");
@@ -919,9 +921,9 @@ void test_build_medium(Tester & t)
         e = w;
         bs.clear();
         for (int i = 0; i < w; ++i)
-            bs.push_back(Bridge { i, i, 1 });
-        bs.push_back(Bridge { 0, e-1, w+1 });
-        bs.push_back(Bridge { w-1, 0, w+2 });
+            bs.push_back(Brg { i, i, 1 });
+        bs.push_back(Brg { 0, e-1, w+1 });
+        bs.push_back(Brg { w-1, 0, w+2 });
 
         ans = w+2;
         test_build_single(t, w, e, cbs, ans,
@@ -934,9 +936,9 @@ void test_build_medium(Tester & t)
         e = w;
         bs.clear();
         for (int i = 0; i < w; ++i)
-            bs.push_back(Bridge { i, i, 1 });
-        bs.push_back(Bridge { 0, e-1, w-1 });
-        bs.push_back(Bridge { w-1, 0, w-2 });
+            bs.push_back(Brg { i, i, 1 });
+        bs.push_back(Brg { 0, e-1, w-1 });
+        bs.push_back(Brg { w-1, 0, w-2 });
 
         ans = w;
         test_build_single(t, w, e, cbs, ans,
