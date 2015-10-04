@@ -1,4 +1,4 @@
-// topological_sort.cpp  UNFINISHED
+// topological_sort.cpp
 // Glenn G. Chappell
 // 2 Oct 2015
 //
@@ -46,8 +46,54 @@ using std::list;
 void topSort(const vector<int> & adjmat,
              int n)
 {
-    // WRITE THIS!!!
-    cout << "Yo!" << endl;
+    vector<int> indegrees(n, 0);    // indegrees[i] counts in-neighbors
+                                    //  of vertex i that have NOT been
+                                    //  processed yet
+    queue<int, list<int>> sources;  // Vertices with no unprocessed
+                                    //  in-neighbors
+    // Initialize indegrees, sources
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+        {
+            if (adjmat[j*n+i])
+                ++indegrees[i];
+        }
+        if (indegrees[i] == 0)
+            sources.push(i);
+    }
+
+    for (int count = 0; count < n; ++count)
+    {
+        // No sources? Not a DAG; no topological sort; exit
+        if (sources.empty())
+        {
+            cout << "[ERROR]" << endl;
+            cout << "*** Digraph is not a DAG; ";
+            cout << "there is no topological sort" << endl;
+            return;
+        }
+
+        // Get a source
+        int s = sources.front();
+        sources.pop();
+
+        // Process this source as next vertex in topological sort
+        cout << s << " ";
+
+        // Update indegrees and sources
+        for (int i = 0; i < n; ++i)
+        {
+            // edge from s to i?
+            if (adjmat[s*n+i])
+            {
+                --indegrees[i];
+                if (indegrees[i] == 0)
+                    sources.push(i);
+            }
+        }
+    }
+    cout << endl;
 }
 
 
