@@ -84,7 +84,7 @@ int main()
         bool good = getNum("n (0 or negative to quit)? ", n);
         if (!good)
             exit(1);
-    
+
         if (n <= 0)
             exit(0);
 

@@ -34,7 +34,7 @@ using std::swap;
 // getNum
 // Prints prompt to cout and then inputs a number of type int on a line
 // from cin. Repeats until valid number obtained; returns it to caller
-// in reference argument. Return value is false if number could not be
+// in reference argument. Return is false if number could not be
 // obtained.
 bool getNum(const string & prompt,
             int & num)
