@@ -1,6 +1,8 @@
-// binary_search.cpp  UNFINISHED
+// binary_search.cpp
+// VERSION 2
 // Glenn G. Chappell
 // 4 Oct 2015
+// Updated: 5 Oct 2015
 //
 // For CS 411/611 Fall 2015
 // Binary Search using Iterators
@@ -11,14 +13,18 @@ using std::endl;
 using std::cin;
 #include <vector>
 using std::vector;
+#include <cstddef>
+using std::size_t;
+#include <iterator>
+using std::distance;
+using std::advance;
 
 
 // binarySearch
 // Does Binary Search on a range specified with iterators.
-// Recursive.
 // Requirements on types:
-//     RAIter is a random-access iterator type.
-//     ValueType is the value type of RAIter.
+//     FDIter is a forward iterator type.
+//     ValueType is the value type of FDIter.
 //     ValueType has a public operator<.
 //     operator< is a total order on ValueType.
 // Pre:
@@ -27,29 +33,40 @@ using std::vector;
 // Post:
 //     Return is true if findme was found (using equivalence) in range,
 //      false otherwise.
-template <typename RAIter, typename ValueType>
-bool binarySearch(RAIter first, RAIter last,  // Range to search
+template <typename FDIter, typename ValueType>
+bool binarySearch(FDIter first, FDIter last,  // Range to search
                   const ValueType & findme)   // Value to find
 {
-    // BASE CASE
+    while (true)  // For tail-recursion elimination
+    {
+        size_t size = distance(first, last);  // Size of range
 
-    if (first == last)
-        return false;
-    if (last == first+1)
-        return *first == findme;
+        // BASE CASE of former recursive function
 
-    // RECURSIVE CASE
+        if (size <= 1)
+        {
+            if (size == 0)
+                return false;
+            return !(*first < findme) && !(findme < *first);
+        }
 
-    // Get iterator to middle position of range
-    RAIter middle = first + (last-first)/2;
+        // RECURSIVE CASE of former recursive function
 
-    if (findme < *middle)
-    {   // Search first half of range
-        return binarySearch(first, middle, findme);
-    }
-    else
-    {   // Search second half of range
-        return binarySearch(middle, last, findme);
+        // Get iterator to middle position of range
+        FDIter middle = first;
+        advance(middle, size/2);
+
+        if (findme < *middle)
+        {   // Search first half of range
+            last = middle;
+        }
+        else
+        {   // Search second half of range
+            first = middle;
+        }
+
+        // Tail call is gone, replaced by loop
+        //return binarySearch(first, last, findme);
     }
 }
 
@@ -72,7 +89,6 @@ void doSearch(const vector<int> & data,  // Data to search in
          << endl;
     cout << endl;
 }
-
 
 
 // Main program
