@@ -1,4 +1,4 @@
-// quickselect.cpp  UNFINISHED
+// quickselect.cpp
 // Glenn G. Chappell
 // 7 Oct 2015
 //
@@ -105,8 +105,35 @@ template <typename RAIter>
 RAIter quickselect(RAIter first, RAIter last,  // Range: [first, last)
                    size_t index)               // Selection index
 {
-    // WRITE THIS!!!
-    return first;  // DUMMY RETURN
+    while (true)  // For tail-recursion elimination
+    {
+        // Find median-of-three pivot & point pivotiter at it
+        size_t size = last - first;
+        assert (size != 0);
+        RAIter pivotiter = medianOf3(first, first+size/2, last-1);
+
+        // Do partition
+        lpartition(first, last, pivotiter);
+        size_t pivotindex = pivotiter - first;
+
+        // BASE CASE of former recursive function
+        // If the pivot is our item, then return it
+        if (index == pivotindex)
+            return pivotiter;
+
+        // RECURSIVE CASE of former recursive function
+        if (index < pivotindex)
+        {   // Recurse on range of items preceding the pivot
+            last = pivotiter;
+        }
+        else
+        {   // Recurse on range of items following the pivot
+            index -= pivotindex+1;
+            first = pivotiter+1;
+        }
+        // Tail call is gone, replaced by loop
+        // return quickselect(first, last, index);
+    }
 }
 
 
