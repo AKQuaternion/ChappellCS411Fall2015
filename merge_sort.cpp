@@ -1,6 +1,6 @@
-// merge_sort.cpp  UNFINISHED
+// merge_sort.cpp
 // Glenn G. Chappell
-// 8 Oct 2015
+// 9 Oct 2015
 //
 // For CS 411/611 Fall 2015
 // Merge Sort using Iterators
@@ -17,6 +17,7 @@ using std::size_t;
 using std::copy;
 #include <iterator>
 using std::distance;
+using std::advance;
 #include <type_traits>
 using std::remove_reference;
 
@@ -83,7 +84,23 @@ void stableMerge(FDIter first, FDIter middle, FDIter last)
 template <typename FDIter>
 void mergeSort(FDIter first, FDIter last)
 {
-    // WRITE THIS!!!
+    // Compute size of sequence
+    size_t size = distance(first, last);
+
+    // BASE CASE
+    if (size <= 1)
+        return;
+
+    // RECURSIVE CASE
+    FDIter middle = first;
+    advance(middle, size/2);  // middle is iterator to middle of range
+
+    // Recursively sort the two lists
+    mergeSort(first, middle);
+    mergeSort(middle, last);
+
+    // And merge them
+    stableMerge(first, middle, last);
 }
 
 
