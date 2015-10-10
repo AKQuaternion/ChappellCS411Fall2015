@@ -54,9 +54,7 @@ void bubbleSortVector(vector<T> & v)
             }
         }
 
-        // If no swaps, then array is sorted; we're done
-        // (This optimization is not mentioned in section 3.1
-        //  of the Levitin text)
+        // If no swaps, then vector is sorted; we're done
         if (!swapped)
             break;
     }
