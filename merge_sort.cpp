@@ -27,6 +27,8 @@ using std::remove_reference;
 // sequence in the same location. Merge is done in a stable manner.
 // Requirements on Types:
 //     FDIter is a forward iterator type.
+//     The value type of FDIter has default ctor, dctor, copy=,
+//      operator<.
 //     operator< is a total order on the value type of FDIter.
 // Pre:
 //     [first, middle) and [middle, last) are valid ranges, each sorted
@@ -75,6 +77,8 @@ void stableMerge(FDIter first, FDIter middle, FDIter last)
 // Recursive.
 // Requirements on Types:
 //     FDIter is a forward iterator type.
+//     The value type of FDIter has default ctor, dctor, copy=,
+//      operator<.
 //     operator< is a total order on the value type of FDIter.
 // Pre:
 //     [first, last) is a valid range.

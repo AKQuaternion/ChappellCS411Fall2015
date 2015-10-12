@@ -17,7 +17,6 @@ using std::size_t;
 using std::copy;
 #include <iterator>
 using std::distance;
-using std::advance;
 #include <type_traits>
 using std::remove_reference;
 
@@ -27,6 +26,8 @@ using std::remove_reference;
 // sequence in the same location. Merge is done in a stable manner.
 // Requirements on Types:
 //     FDIter is a forward iterator type.
+//     The value type of FDIter has default ctor, dctor, copy=,
+//      operator<.
 //     operator< is a total order on the value type of FDIter.
 // Pre:
 //     [first, middle) and [middle, last) are valid ranges, each sorted
@@ -74,6 +75,8 @@ void stableMerge(FDIter first, FDIter middle, FDIter last)
 // Sorts a sequence, using iterative variant of Merge Sort.
 // Requirements on Types:
 //     RAIter is a random-access iterator type.
+//     The value type of RAIter has default ctor, dctor, copy=,
+//      operator<.
 //     operator< is a total order on the value type of RAIter.
 // Pre:
 //     [first, last) is a valid range.
@@ -141,6 +144,7 @@ int main()
     cout << endl;
     cout << endl;
 
+    // Wait for user
     cout << "Press ENTER to quit ";
     while (cin.get() != '\n') ;
 

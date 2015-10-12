@@ -26,6 +26,7 @@ using std::size_t;
 //
 // Requirements on Types:
 //     FDIter must be a forward iterator type.
+//     The value type of FDIter must have copy=, operator<.
 //     operator< must be a total order on the value type of FDIter.
 // Pre:
 //     [first, last) is a valid nonempty range.
