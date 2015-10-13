@@ -1,4 +1,4 @@
-// quicksort.cpp  UNFINISHED
+// quicksort.cpp
 // Glenn G. Chappell
 // 12 Oct 2015
 //
@@ -11,8 +11,12 @@ using std::endl;
 using std::cin;
 #include <vector>
 using std::vector;
+#include <cstddef>
+using std::size_t;
 #include <algorithm>
 using std::iter_swap;
+#include <cassert>
+// For assert
 
 
 // hpartition
@@ -109,7 +113,40 @@ Iter medianOf3(Iter ai, Iter bi, Iter ci)
 template <typename RAIter>
 void quicksort(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!!
+    while (true)  // For tail-recursion elimination
+    {
+        size_t size = last - first;
+
+        // BASE CASE
+        if (size <= 1)
+            return;
+
+        // RECURSIVE CASE
+
+        // Find median-of-three pivot & point pivotiter at it
+        assert (size != 0);
+        RAIter pivotiter = medianOf3(first, first+size/2, last-1);
+
+        // Do partition
+        hpartition(first, last, pivotiter);
+
+        // Do actual recursive call on smaller of two parts;
+        //  tail-recursion elimination on the other
+        if (pivotiter-first < last-pivotiter-1)
+        {
+            quicksort(first, pivotiter);
+            //quicksort(pivotiter+1, last);
+            first = pivotiter+1;
+        }
+        else
+        {
+            quicksort(pivotiter+1, last);
+            //quicksort(first, pivotiter);
+            last = pivotiter;
+        }
+        // Tail call is gone, replaced by loop
+        //quicksort(first, last);
+    }
 }
 
 
