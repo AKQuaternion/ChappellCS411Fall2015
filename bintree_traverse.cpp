@@ -1,4 +1,4 @@
-// bintree_traverse.cpp  UNFINISHED
+// bintree_traverse.cpp
 // Glenn G. Chappell
 // 14 Oct 2015
 //
@@ -95,8 +95,21 @@ void preorderTraverse(BinaryTree t,
                       const string & d3=" ",
                       const string & d4="")
 {
-    // WRITE THIS!!!
-    cout << "PREORDER" << endl;
+    if (t == nullptr)
+        return;
+    if (t->left == nullptr && t->right == nullptr)
+    {
+        // This is just to make the output prettier
+        cout << t->value;
+        return;
+    }
+    cout << d1;
+    cout << t->value;
+    cout << d2;
+    preorderTraverse(t->left, d1, d2, d3, d4);
+    cout << d3;
+    preorderTraverse(t->right, d1, d2, d3, d4);
+    cout << d4;
 }
 
 
@@ -109,8 +122,21 @@ void inorderTraverse(BinaryTree t,
                      const string & d3=" ",
                      const string & d4="")
 {
-    // WRITE THIS!!!
-    cout << "INORDER" << endl;
+    if (t == nullptr)
+        return;
+    if (t->left == nullptr && t->right == nullptr)
+    {
+        // This is just to make the output prettier
+        cout << t->value;
+        return;
+    }
+    cout << d1;
+    inorderTraverse(t->left, d1, d2, d3, d4);
+    cout << d2;
+    cout << t->value;
+    cout << d3;
+    inorderTraverse(t->right, d1, d2, d3, d4);
+    cout << d4;
 }
 
 
@@ -123,8 +149,21 @@ void postorderTraverse(BinaryTree t,
                        const string & d3=" ",
                        const string & d4="")
 {
-    // WRITE THIS!!!
-    cout << "POSTORDER" << endl;
+    if (t == nullptr)
+        return;
+    if (t->left == nullptr && t->right == nullptr)
+    {
+        // This is just to make the output prettier
+        cout << t->value;
+        return;
+    }
+    cout << d1;
+    postorderTraverse(t->left, d1, d2, d3, d4);
+    cout << d2;
+    postorderTraverse(t->right, d1, d2, d3, d4);
+    cout << d3;
+    cout << t->value;
+    cout << d4;
 }
 
 
