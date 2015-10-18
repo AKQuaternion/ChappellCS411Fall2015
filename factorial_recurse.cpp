@@ -23,7 +23,7 @@ using std::uint_fast64_t;
 // Type unum
 // Type of values used for large-ish integer computation.
 // Should be an unsigned integer type.
-typedef uint_fast64_t unum;  // >= 64 bits, fast, unsigned
+using unum = uint_fast64_t;  // >= 64 bits, fast, unsigned
 
 
 // factorial

@@ -19,7 +19,7 @@ using std::pair;
 // Type unum
 // Type of values used for large-ish integer computation.
 // Should be an unsigned integer type.
-typedef uint_fast64_t unum;  // >= 64 bits, fast, unsigned
+using unum = uint_fast64_t;  // >= 64 bits, fast, unsigned
 
 
 // Type upair: pair of unum values. For function fibo_recurse.

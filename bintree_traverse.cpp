@@ -36,7 +36,7 @@ using std::make_shared;
 //         has finite height).
 
 struct BTNode;  // Forward declaration
-typedef shared_ptr<BTNode> BinaryTree;
+using BinaryTree = shared_ptr<BTNode>;
 
 
 // struct BTNode
