@@ -1,6 +1,8 @@
 // closest_pair_bf.cpp
+// VERSION 2
 // Glenn G. Chappell
 // 23 Sep 2015
+// Updated: 18 Oct 2015
 //
 // For CS 411/611 Fall 2015
 // Brute-Force Closest-Pair
@@ -11,6 +13,9 @@
 using std::cout;
 using std::endl;
 using std::cin;
+using std::fixed;
+#include <iomanip>
+using std::setprecision;
 #include <vector>
 using std::vector;
 #include <utility>
@@ -111,7 +116,6 @@ void printPair(const vector<Pt2> & pts,
     cout << a << ": (" << pts[a].x << ", " << pts[a].y << ")" << endl;
     cout << b << ": (" << pts[b].x << ", " << pts[b].y << ")" << endl;
     cout << "Distance: " << dist(pts[a], pts[b]) << endl;
-    cout << endl;
 }
 
 
@@ -124,12 +128,13 @@ void printPair(const vector<Pt2> & pts,
 pair<size_t, size_t> closestPair_bf(const vector<Pt2> & pts)
 {
     size_t n = pts.size();  // Number of pts in dataset
-    assert(n >= 2);
+    assert (n >= 2);
 
-    pair<size_t, size_t> closepair(0, 1);
-                            // Indices of 2 closest pts so far
-    double mindist = dist(pts[0], pts[1]);
-                            // Their distance
+    // Variables holding best pair so far & distances to compare
+    // Best pair so far is initialized to first 2 pts given
+    pair<size_t, size_t> closepair(0, 1);     // Indices of best pair
+    double closedist = dist(pts[0], pts[1]);  // Distance of best pair
+    double newdist;                           // Distance of new pair
 
     // Loop through all pairs of indices i,j with 0 <= i < j < n
     for (size_t i = 0; i < n; ++i)
@@ -137,20 +142,20 @@ pair<size_t, size_t> closestPair_bf(const vector<Pt2> & pts)
         for (size_t j = i+1; j < n; ++j)
         {
             // Find distance of current pair
-            double d = dist(pts[i], pts[j]);
+            newdist = dist(pts[i], pts[j]);
 
             // Is this pair closer than best so far?
-            if (d < mindist)
+            if (newdist < closedist)
             {
                 // Found closer pair; save it
                 closepair.first = i;
                 closepair.second = j;
-                mindist = d;
+                closedist = newdist;
             }
         }
     }
 
-    // Return indices of closest pair as std::pair<size_t,size_t>
+    // Return indices of closest pair
     return closepair;
 }
 
@@ -159,16 +164,18 @@ pair<size_t, size_t> closestPair_bf(const vector<Pt2> & pts)
 // Generate list of random 2-D pts, find closest pair, print results.
 int main()
 {
-    GRand r;  // Our PRNG; seeded unpredictably
+    GRand r;                           // Our PRNG; seeded unpredictably
+    cout << fixed << setprecision(8);  // Floating-point output format
 
     // Get number of points
-    int num_pts;
+    int numpts;
     while (true)
     {
-        bool success = getNum("Number of points (at least 2)? ", num_pts);
+        bool success =
+            getNum("Number of points (at least 2)? ", numpts);
         if (!success)
             exit(1);
-        if (num_pts >= 2)
+        if (numpts >= 2)
             break;
         cout << endl;
         cout << "Number of points must be at least 2" << endl;
@@ -177,28 +184,33 @@ int main()
 
     // Generate list of points
     vector<Pt2> pts;
-    for (int i = 0; i < num_pts; ++i)
+    for (int i = 0; i < numpts; ++i)
     {
         pts.push_back(randPt2(r, -100., 100.));
     }
 
-    /*
-    // Print list of points
-    cout << num_pts << " points:" << endl;
-    for (int i = 0; i < num_pts; ++i)
+    // Print coordinates, if not many points; print how many points
+    if (numpts <= 10)
     {
-        cout << i << ": (" << pts[i].x << ", " << pts[i].y << ")"
-             << endl;
+        cout << "Points:" << endl;
+        for (int i = 0; i < numpts; ++i)
+        {
+            cout << i << ": (" << pts[i].x << ", " << pts[i].y << ")"
+                 << endl;
+        }
+        cout << endl;
     }
+    cout << numpts << " points generated" << endl;
     cout << endl;
-    */
-    cout << num_pts << " points generated" << endl;
-    cout << endl;
+
+    // Variables for results
+    pair <size_t, size_t> closepair;  // Indices of closest pair
 
     // Print closest pair (Brute-Force method)
     cout << "Closest pair (Brute-Force method):" << endl;
-    auto closest_bf = closestPair_bf(pts);
-    printPair(pts, closest_bf);
+    closepair = closestPair_bf(pts);
+    printPair(pts, closepair);
+    cout << endl;
 
     // Wait for user
     cout << "Press ENTER to quit ";
