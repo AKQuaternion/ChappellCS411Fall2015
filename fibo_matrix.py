@@ -85,19 +85,30 @@ def fibo(n):
     return fibomat(n)[1]
 
 
-# If run as program, input n, print F(n), repeat
+def print_results(n):
+    """Compute Fibonacci number F(n); print in pretty form."""
+
+    print("F({}) = {}".format(n, fibo(n)))
+
+
+# If this module is executed as a program (instead of being imported):
+#  input n, print F(n), repeat until blank line input
 if __name__ == "__main__":
     while True:
+        print()
+        print("Given integer n, I will compute Fibonacci number F(n).")
+        print()
         try:
-            line = input("Type n; I'll compute F(n) [blank line to exit]: ")
+            line = input("Type n [blank line to exit]: ")
             if line == "": break
             n = int(line)
             if n < 0: raise Exception()
         except:
+            print()
             print("Please type a nonnegative integer")
         else:
-            print("F({n}) = {fib}".format(
-                  n = n, fib = fibo(n)
-                  ));
+            print()
+            print_results(n)
         print()
+        print("-" * 60)
 
