@@ -1,9 +1,9 @@
-// heap_sort.cpp  UNFINISHED
+// heap_sort.cpp
 // Glenn G. Chappell
-// 25 Oct 2015
+// 26 Oct 2015
 //
 // For CS 411/611 Fall 2015
-// Heap algorithms & Heap Sort
+// Heap Algorithms & Heap Sort
 
 #include <iostream>
 using std::cout;
@@ -20,6 +20,12 @@ using std::iter_swap;
 // For assert
 
 
+// *********************************************************************
+// testHeap & heapInsert are provided for reference purposes. They are
+// not used by heapSort.
+// *********************************************************************
+
+
 // testHeap
 // Determines whether given random-access range is a Heap.
 // Requirements on Types:
@@ -32,8 +38,14 @@ using std::iter_swap;
 template<typename RAIter>
 bool testHeap(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
-    return true;  // DUMMY
+    size_t size = last - first;
+    // Compare each non-root item with its parent
+    for (size_t index = 1; index < size; ++index)
+    {
+        if (first[(index-1)/2] < first[index])
+            return false;
+    }
+    return true;
 }
 
 
@@ -51,8 +63,24 @@ bool testHeap(RAIter first, RAIter last)
 template<typename RAIter>
 void heapInsert(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
+    assert(last != first);
+    size_t curr = (last-first)-1;    // Index of item to "trickle up"
+    while (curr != 0)
+    {
+        size_t parent = (curr-1)/2;  // Index of parent
+        if (!(first[parent] < first[curr]))
+            break;  // No more trickling; done
+
+        // Trickle up one level
+        swap(first[curr], first[parent]);
+        curr = parent;
+    }
 }
+
+
+// *********************************************************************
+// Functions below used by heapSort.
+// *********************************************************************
 
 
 // trickleDown
@@ -74,7 +102,26 @@ void heapInsert(RAIter first, RAIter last)
 template<typename RAIter>
 void trickleDown(RAIter first, RAIter last, RAIter location)
 {
-    // WRITE THIS!!!
+    size_t size = last - first;
+    size_t curr = location - first;  // Index of item to "trickle down"
+    assert(curr < size);
+    while (true)
+    {
+        size_t lchild = 2*curr+1;    // Index of left child (if any)
+        if (lchild >= size)          // Are there any children?
+            break;                   // If not, done
+
+        size_t bigchild = lchild;    // Will hold index of bigger child
+        if (lchild+1 < size && first[lchild] < first[lchild+1])
+            bigchild = lchild+1;
+
+        if (!(first[curr] < first[bigchild]))
+            break;  // No more trickling; done
+
+        // Trickle down one level
+        swap(first[curr], first[bigchild]);
+        curr = bigchild;
+    }
 }
 
 
@@ -92,7 +139,9 @@ void trickleDown(RAIter first, RAIter last, RAIter location)
 template<typename RAIter>
 void heapDelete(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
+    assert(last != first);
+    iter_swap(first, last-1);
+    trickleDown(first, last-1, first);
 }
 
 
@@ -109,7 +158,16 @@ void heapDelete(RAIter first, RAIter last)
 template<typename RAIter>
 void makeHeap(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
+    // Trickle down every item in the range, in reverse order
+    for (auto location = last-1; first <= location; --location)
+        trickleDown(first, last, location);
+
+    /*
+    // Above is the linear-time method. Below is the more obvious
+    //  method, which also works, but requires log-linear time.
+    for (auto currentEnd = first+2; currentEnd <= last; ++currentEnd)
+        heapInsert(first, currentEnd);
+    */
 }
 
 
@@ -128,7 +186,11 @@ void makeHeap(RAIter first, RAIter last)
 template<typename RAIter>
 void heapToSorted(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
+    while (last-first >= 2)
+    {
+        heapDelete(first, last);
+        --last;
+    }
 }
 
 
@@ -145,7 +207,8 @@ void heapToSorted(RAIter first, RAIter last)
 template <typename RAIter>
 void heapSort(RAIter first, RAIter last)
 {
-    // WRITE THIS!!!
+    makeHeap(first, last);
+    heapToSorted(first, last);
 }
 
 

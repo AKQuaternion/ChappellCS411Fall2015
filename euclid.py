@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# euclid.py  UNFIINISHED
+# euclid.py
 # Glenn G. Chappell
-# 25 Oct 2015
+# 26 Oct 2015
 #
 # For CS 411/611 Fall 2015
 """Euclid's Algorithm: GCD & LCM.
@@ -39,8 +39,12 @@ def gcd(a, b):
     91
 
     """
-    # WRITE THIS!!!
-    return 42  # DUMMY
+    a = abs(a)
+    b = abs(b)
+    while a != 0:
+        a, b = b%a, a
+    return b
+
 
 def lcm(a, b):
     """lcm(a,b) -> least common multiple of integers a, b.
@@ -61,8 +65,11 @@ def lcm(a, b):
     3951527416036200
 
     """
-    # WRITE THIS!!!
-    return 42  # DUMMY
+    a = abs(a)
+    b = abs(b)
+    if a == 0 and b == 0:
+        return 0
+    return (a // gcd(a, b)) * b  # "//" is integer division
 
 
 def print_results(a, b):
