@@ -3,7 +3,7 @@
 // 4 Nov 2015
 //
 // For CS 411/611 Fall 2015
-// Simple Dynamic-Programming Example
+// Simple Bottom-Up Dynamic-Programming Example
 
 #include <iostream>
 using std::cout;
