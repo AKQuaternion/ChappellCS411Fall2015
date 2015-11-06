@@ -18,7 +18,8 @@ using std::size_t;
 using std::vector;
 #include <algorithm>
 using std::max;
-#include <cassert>  // for assert
+#include <cassert>
+// for assert
 
 
 // getYN
@@ -118,12 +119,12 @@ void try_coinRow(size_t n,
                  bool dobf)  // True if we do brute-force method
 {
     // Values to push
-    int valuepattern[8] = { 1, 10, 1, 10, 10, 1, 10, 1 };
+    vector<int> valuepattern { 1, 10, 1, 10, 10, 1, 10, 1 };
 
     // Make dataset
     vector<int> values;
     for (size_t i = 0; i != n; ++i)
-        values.push_back(valuepattern[i%8]);
+        values.push_back(valuepattern[i%valuepattern.size()]);
 
     // Call coin-row function(s)
     cout << "Number of values: " << n << endl;
