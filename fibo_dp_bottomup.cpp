@@ -34,16 +34,16 @@ using unum = uint_fast64_t;  // >= 64 bits, fast, unsigned
 // Does not throw.
 unum fibo(int n)
 {
-    vector<unum> saved(n+1);  // saved[i] will be ith Fibonacci
+    vector<unum> fibotable(n+1);  // fibotable[i] will be ith Fibonacci
 
     for (int i = 0; i <= n; ++i)
     {
         if (i <= 1)
-            saved[i] = unum(i);
+            fibotable[i] = unum(i);
         else
-            saved[i] = saved[i-1] + saved[i-2];
+            fibotable[i] = fibotable[i-1] + fibotable[i-2];
     }
-    return saved[n];
+    return fibotable[n];
 }
 
 
