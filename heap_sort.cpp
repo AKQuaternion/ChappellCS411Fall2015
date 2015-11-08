@@ -59,7 +59,8 @@ bool testHeap(RAIter first, RAIter last)
 //     [first, last) is a valid range.
 //     [first, last-1) forms a Heap.
 // Post:
-//     [first, last) forms a Heap with the items formerly in [first, last).
+//     [first, last) contains the same items as it did initially, but
+//      now forming a Heap.
 template<typename RAIter>
 void heapInsert(RAIter first, RAIter last)
 {
@@ -154,7 +155,8 @@ void heapDelete(RAIter first, RAIter last)
 // Pre:
 //     [first, last) is a valid range.
 // Post:
-//     [first, last) is a Heap containing the same items as initially.
+//     [first, last) contains the same items as it did initially, but
+//      now forming a Heap.
 template<typename RAIter>
 void makeHeap(RAIter first, RAIter last)
 {
@@ -181,8 +183,8 @@ void makeHeap(RAIter first, RAIter last)
 //     [first, last) is a valid range.
 //     [first, last) is a Heap.
 // Post:
-//     [first, last) contains the same items as it did initially,
-//      but now sorted by <.
+//     [first, last) contains the same items as it did initially, but
+//      now sorted by <.
 template<typename RAIter>
 void heapToSorted(RAIter first, RAIter last)
 {

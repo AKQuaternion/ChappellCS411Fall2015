@@ -22,7 +22,7 @@ Requires Python 3.x."""
 
 
 def fibomat(n):
-    """nonneg int n -> [F(n-1), F(n), F(n), F(n+1)]; F(k) is kth Fibo no.
+    """nonneg int n -> [F(n-1), F(n), F(n), F(n+1)]; F(k) is kth Fibo #
 
     F(0) = 0. F(1) = 1. For k >= 2, F(k) = F(k-2) + F(k-1).
     Return value is a 2x2 matrix in row-major order.

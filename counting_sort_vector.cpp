@@ -93,7 +93,7 @@ void distributionCountingSort(vector<int> & data)
     for (size_t i = 0; i < data.size(); ++i)
     {
         buffer[freqs[data[i]-minelt]] = data[i];
-        ++freqs[data[i]-minelt];  // Update index, for next w/ same value
+        ++freqs[data[i]-minelt];  // Update index for next w/ same value
     }
 
     // Copy back to original storage

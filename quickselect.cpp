@@ -49,7 +49,7 @@ void lpartition(FDIter first, FDIter last,  // Range to partition
     // Make the "left list": list of items less than pivot
     FDIter leftFinal = first;  // points to final item in left list
     FDIter check = first;      // item to check
-    for (++check;              // start after pivot, iterate through list
+    for (++check;              // start after pivot, iterate thru list
          check != last;
          ++check)
     {
