@@ -1,9 +1,9 @@
-// floyd.cpp  UNFINISHED
+// warshall.cpp  UNFINISHED
 // Glenn G. Chappell
 // 9 Nov 2015
 //
 // For CS 411/611 Fall 2015
-// Floyd's Algorithm
+// Warshall's Algorithm
 
 #include <iostream>
 using std::cout;
@@ -17,36 +17,27 @@ using std::vector;
 using std::size_t;
 
 
-const int INF = -1;  // Used to represent +infinity (no path exists)
-
-// We represent a weighted digraph by an adjacency-matrix-like
-//  structure. For an N-vertex digraph, the structure is a vector<int>
-//  of size N*N. Entry [i*N+j] is INF if there is no arc from i to j and
-//  nonnegative otherwise. This nonnegative value is the weight on the
-//  arc from i to j.
-
-
-// floyd
-// Given a weighted digraph (represented as described above), solves
-//  the All-Pairs Shortest-Path problem, using Floyd's Algorithm.
-// Returns a weighted digraph (represented as described above). INF
-//  means no path in the original digraph; otherwise, the weight is
-//  the total weight of the shortest path in the original digraph.
+// warshall
+// Given the adjacency matrix of a digraph, computes the adjacency
+//  matrix of the transitive closure of the digraph, using Warshall's
+//  Algorithm.
 //
-// Input matrix is given in digraph, with its order in N.
-// Output matrix is returned in the same format.
+// Input adjacency matrix is given in adjmat, with its order in N.
+//  adjmat[i*N + j] is 1 if there is a directed edge from vertex i to
+//  vertex j, 0 otherwise,
+// Output adjacency matrix is returned in the same format.
 //
 // Pre:
-//     digraph has size at least N*N.
-//     digraph[i*N + j] is either INF or nonnegative, for 0 <= i,j < N.
+//     adjmat has size at least N*N.
+//     adjmat[i*N + j] is either 0 or 1, for 0 <= i,j < N.
 // Post:
-//     Considering digraph[..] as a digraph [see above],
-//      All-Pairs Shortest-Path solution lies in return value.
-vector<int> floyd(const vector<int> & digraph,
-                  size_t N)
+//     Considering adjmat[..] as an adjacency matrix (see above),
+//      adjacency matrix of transitive closure lies in return value.
+vector<int> warshall(const vector<int> & adjmat,
+                     size_t N)
 {
     // WRITE THIS!!!
-    return digraph;  // Dummy return
+    return adjmat;  // Dummy return
 }
 
 
@@ -61,12 +52,7 @@ void printMatrix(const vector<int> & matrix,
     {
         for (size_t col = 0; col < numcols; ++col)
         {
-            int value = matrix[row*numcols+col];
-            if (value == INF)
-                cout << "  -";
-            else
-                cout << setw(3) <<value;
-            cout << " ";
+            cout << setw(3) << matrix[row*numcols+col] << " ";
         }
         cout << endl;
     }
@@ -74,30 +60,30 @@ void printMatrix(const vector<int> & matrix,
 
 
 // Main program
-// Demonstrate use of function floyd.
+// Demonstrate use of function warshall.
 int main()
 {
     const size_t N = 5;  // Number of vertices of digraph
 
-    // Set up weighted adjacency matrix of digraph
-    vector<int> weights(N*N, INF);
-    weights[0*N + 1] = 1;
-    weights[1*N + 0] = 3;
-    weights[1*N + 4] = 2;
-    weights[1*N + 3] = 7;
-    weights[4*N + 2] = 2;
-    weights[4*N + 3] = 3;
+    // Set up adjacency matrix of digraph
+    vector<int> adjmat(N*N, 0);
+    adjmat[0*N + 1] = 1;
+    adjmat[1*N + 0] = 1;
+    adjmat[1*N + 4] = 1;
+    adjmat[1*N + 3] = 1;
+    adjmat[4*N + 2] = 1;
+    adjmat[4*N + 3] = 1;
 
     // Print original adjacency matrix
-    cout << "Original weighted digraph:" << endl;
-    printMatrix(weights, N);
+    cout << "Original digraph:" << endl;
+    printMatrix(adjmat, N);
     cout << endl;
 
-    // Compute All-Pairs Shortest-Paths solution
-    vector<int> result = floyd(weights, N);
+    // Compute transitive closure
+    vector<int> result = warshall(adjmat, N);
 
-    // Print A-P S-P solution
-    cout << "All-pairs shortest-paths solution:" << endl;
+    // Print transitive closure
+    cout << "Transitive closure:" << endl;
     printMatrix(result, N);
     cout << endl;
 
