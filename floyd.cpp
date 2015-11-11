@@ -1,4 +1,4 @@
-// floyd.cpp  UNFINISHED
+// floyd.cpp
 // Glenn G. Chappell
 // 9 Nov 2015
 //
@@ -26,6 +26,19 @@ const int INF = -1;  // Used to represent +infinity (no path exists)
 //  arc from i to j.
 
 
+// minPlus
+// Given a, b, c, returns min(a, b+c), where INF values are handled
+//  correctly.
+int minPlus(int a, int b, int c)
+{
+    if (b == INF || c == INF)
+        return a;
+    else if (a == INF || b+c < a)
+        return b+c;
+    return a;
+}
+
+
 // floyd
 // Given a weighted digraph (represented as described above), solves
 //  the All-Pairs Shortest-Path problem, using Floyd's Algorithm.
@@ -45,8 +58,35 @@ const int INF = -1;  // Used to represent +infinity (no path exists)
 vector<int> floyd(const vector<int> & digraph,
                   size_t N)
 {
-    // WRITE THIS!!!
-    return digraph;  // Dummy return
+    // d: temporary storage
+    // Item i,j in adjacency matrix k is stored in d[k*n*n + i*n + j].
+    // The item is the length of the shortest path in the original
+    //  digraph from vertex i to vertex j, using only intermediate
+    //  vertices numbered less than k, or INF if there is no such path.
+    // NOTE: This numbering scheme is slightly different from that in
+    //  the Levitin text.
+    vector<int> d((N+1)*N*N);
+
+    // Copy adjacency matrix to d
+    for (size_t i = 0; i < N; ++i)
+        for (size_t j = 0; j < N; ++j)
+            d[0*N*N + i*N + j] = digraph[i*N + j];
+
+    // Run Floyd's Algorithm
+    for (size_t k = 1; k <= N; ++k)
+        for (size_t i = 0; i < N; ++i)
+            for (size_t j = 0; j < N; ++j)
+                d[k*N*N + i*N + j] = minPlus(
+                    d[(k-1)*N*N + i*N + j],
+                    d[(k-1)*N*N + i*N + (k-1)],
+                    d[(k-1)*N*N + (k-1)*N + j]);
+
+    // Copy final matrix to storage for result and return it
+    vector<int> result(N*N);
+    for (size_t i = 0; i < N; ++i)
+        for (size_t j = 0; j < N; ++j)
+            result[i*N + j] = d[N*N*N + i*N + j];
+    return result;
 }
 
 

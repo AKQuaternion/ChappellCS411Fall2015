@@ -1,4 +1,4 @@
-// warshall.cpp  UNFINISHED
+// warshall.cpp
 // Glenn G. Chappell
 // 9 Nov 2015
 //
@@ -36,8 +36,34 @@ using std::size_t;
 vector<int> warshall(const vector<int> & adjmat,
                      size_t N)
 {
-    // WRITE THIS!!!
-    return adjmat;  // Dummy return
+    // d: temporary storage
+    // Item i,j in adjacency matrix k is stored in d[k*n*n + i*n + j].
+    // The item is 1 if there is a directed path in the original graph
+    //  from vertex i to vertex j, using only intermediate vertices
+    //  numbered less than k.
+    // NOTE: This numbering scheme is slightly different from that in
+    //  the Levitin text.
+    vector<int> d((N+1)*N*N);
+
+    // Copy adjacency matrix to d
+    for (size_t i = 0; i < N; ++i)
+        for (size_t j = 0; j < N; ++j)
+            d[0*N*N + i*N + j] = adjmat[i*N + j];
+
+    // Run Warshall's Algorithm
+    for (size_t k = 1; k <= N; ++k)
+        for (size_t i = 0; i < N; ++i)
+            for (size_t j = 0; j < N; ++j)
+                d[k*N*N + i*N + j] =
+                    d[(k-1)*N*N + i*N + j] ||
+                   (d[(k-1)*N*N + i*N + (k-1)] && d[(k-1)*N*N + (k-1)*N + j]);
+
+    // Copy final matrix to storage for result and return it
+    vector<int> result(N*N);
+    for (size_t i = 0; i < N; ++i)
+        for (size_t j = 0; j < N; ++j)
+            result[i*N + j] = d[N*N*N + i*N + j];
+    return result;
 }
 
 
