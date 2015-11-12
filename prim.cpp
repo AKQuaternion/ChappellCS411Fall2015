@@ -1,4 +1,4 @@
-// prim.cpp  UNFINISHED
+// prim.cpp
 // Glenn G. Chappell
 // 11 Nov 2015
 //
@@ -17,6 +17,9 @@ using std::vector;
 using std::size_t;
 #include <utility>
 using std::pair;
+#include <queue>
+using std::priority_queue;
+#include <cassert>  // for assert
 
 
 const int INF = -1;  // Used to represent +infinity
@@ -34,15 +37,66 @@ typedef pair<int, int> Edge;    // Type for edge of graph
 // prim
 // Compute minimum spanning tree using Prim's Algorithm.
 // Given weighted graph (represented as discussed above), order of
-//  graph, adjacency lists, and start vertex.
+// graph, adjacency lists, and start vertex.
 vector<Edge> prim(
     const vector<int> & wgraph,             // weights
     int N,                                  // number of vertices
     const vector<vector<int> > & adjlists,  // adjacency lists
     int start)                              // index of start vertex
 {
-    // WRITE THIS!!!
-    return vector<Edge>();  // Dummy return
+    assert (N >= 1);
+    assert (wgraph.size() == size_t(N*N));
+    assert (0 <= start && start < N);
+    assert (adjlists.size() == size_t(N));
+
+    vector<int> reached(N, 0);  // item i is 1 if vert i reached, else 0
+    vector<Edge> tree;          // Edges in tree
+
+    // Make priority queue of edges; top edge is one of least weight
+
+    // Comparison function for priority queue
+    auto comp = [&](const Edge & a, const Edge & b)  // Comparison func
+    {
+        // Get weight of edge a, edge b
+        auto wta = wgraph[a.first*N+a.second];
+        auto wtb = wgraph[b.first*N+b.second];
+        return wtb < wta;       // Compare reversed to get smallest
+    };
+    // The priority queue itself
+    priority_queue<Edge, vector<Edge>, decltype(comp)> pq(comp);
+
+    // Handle start vertex
+    reached[start] = 1;
+    for (auto v : adjlists[start])
+    {
+        if (!reached[v])
+            pq.push(Edge(start, v));
+    }
+
+    // Repeat until done with all edges
+    while (!pq.empty())
+    {
+        // Get least-weight edge from reached to unreached vertex
+        auto e = pq.top();
+        pq.pop();
+        auto u = e.second;
+        if (reached[u])
+            continue;
+
+        // Handle new edge (e) & vertex (u)
+        tree.push_back(e);
+        if (tree.size() == size_t(N-1))
+            break;  // An easy optimization
+        reached[u] = 1;
+        for (auto v : adjlists[u])
+        {
+            if (!reached[v])
+                pq.push(Edge(u, v));
+        }
+    }
+
+    // Done
+    return tree;
 }
 
 
