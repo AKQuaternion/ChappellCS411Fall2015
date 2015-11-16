@@ -1,6 +1,6 @@
-// unionfind.h  UNFINISHED
+// unionfind.h
 // Glenn G. Chappell
-// 11 Nov 2015
+// 13 Nov 2015
 //
 // For CS 411/611 Fall 2015
 // Header for class UnionFind
@@ -20,8 +20,7 @@ using std::size_t;
 
 // class UnionFind
 // Union-Find structure.
-// "Quick union" (rooted tree) implementation, with union-by-rank and
-// path-compression optimizations.
+// "Quick union" (rooted tree) implementation.
 //
 // Items are nonnegative int values.
 // Member functions:
@@ -44,7 +43,17 @@ public:
     //     x >= 0.
     void makeSet(int x)
     {
-        // WRITE THIS!!!
+        assert(x >= 0);
+
+        if (size_t(x) >= _data.size())
+        {
+            _data.resize(x+1, Info(0, 0, false));
+        }
+
+        if (!_data[x]._inited)
+        {
+            _data[x] = Info(x, 0, true);
+        }
     }
 
     // find
@@ -54,8 +63,16 @@ public:
     //     makeSet must have been previously called on x.
     int find(int x)
     {
-        // WRITE THIS!!!
-        return 0;  // Dummy return
+        assert(x >= 0);
+        assert(size_t(x) < _data.size());
+        assert(_data[x]._inited);
+
+        // Do path compression
+        if (_data[x]._parent == x)
+        {
+            return x;
+        }
+        return find(_data[x]._parent);
     }
 
     // unionx
@@ -67,7 +84,21 @@ public:
     void unionx(int x,
                 int y)
     {
-        // WRITE THIS!!!
+        assert(x >= 0);
+        assert(size_t(x) < _data.size());
+        assert(_data[x]._inited);
+        assert(y >= 0);
+        assert(size_t(y) < _data.size());
+        assert(_data[y]._inited);
+        
+        int xroot = find(x);
+        int yroot = find(y);
+        if (xroot == yroot)
+        {
+            return;
+        }
+
+        _data[xroot]._parent = yroot;
     }
 
 // ***** UnionFind: internal-use types *****
@@ -78,6 +109,7 @@ private:
     struct Info {
         int  _parent;  // Parent of item
         int  _rank;    // Tree rank; only valid for root item
+                       //  NOT USED (YET)
         bool _inited;  // Has Make-Set been called on this item?
                        //  _parent, _rank fields invalid if !_inited
 
