@@ -1,11 +1,15 @@
 // unionfind.h
+// VERSION 2
 // Glenn G. Chappell
-// 13 Nov 2015
+// 16 Nov 2015
 //
 // For CS 411/611 Fall 2015
 // Header for class UnionFind
 // Union-Find Structure
 // There is no associated source file
+//
+// History:
+// - v2: Added optimizations: path compression, union by rank.
 
 #ifndef FILE_UNIONFIND_H_INCLUDED
 #define FILE_UNIONFIND_H_INCLUDED
@@ -20,7 +24,8 @@ using std::size_t;
 
 // class UnionFind
 // Union-Find structure.
-// "Quick union" (rooted tree) implementation.
+// "Quick union" (rooted tree) implementation, with union-by-rank and
+// path-compression optimizations.
 //
 // Items are nonnegative int values.
 // Member functions:
@@ -68,11 +73,11 @@ public:
         assert(_data[x]._inited);
 
         // Do path compression
-        if (_data[x]._parent == x)
+        if (_data[x]._parent != x)
         {
-            return x;
+            _data[x]._parent = find(_data[x]._parent);
         }
-        return find(_data[x]._parent);
+        return _data[x]._parent;
     }
 
     // unionx
@@ -98,7 +103,20 @@ public:
             return;
         }
 
-        _data[xroot]._parent = yroot;
+        // Do union-by-rank
+        if (_data[xroot]._rank < _data[yroot]._rank)
+        {
+            _data[xroot]._parent = yroot;
+        }
+        else if (_data[yroot]._rank < _data[xroot]._rank)
+        {
+            _data[yroot]._parent = xroot;
+        }
+        else
+        {
+            _data[yroot]._parent = xroot;
+            ++_data[xroot]._rank;
+        }
     }
 
 // ***** UnionFind: internal-use types *****
@@ -109,7 +127,6 @@ private:
     struct Info {
         int  _parent;  // Parent of item
         int  _rank;    // Tree rank; only valid for root item
-                       //  NOT USED (YET)
         bool _inited;  // Has Make-Set been called on this item?
                        //  _parent, _rank fields invalid if !_inited
 
