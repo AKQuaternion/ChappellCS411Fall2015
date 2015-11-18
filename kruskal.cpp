@@ -1,6 +1,6 @@
-// kruskal.cpp  UNFINISHED
+// kruskal.cpp
 // Glenn G. Chappell
-// 13 Nov 2015
+// 16 Nov 2015
 //
 // For CS 411/611 Fall 2015
 // Kruskal's Algorithm
@@ -46,8 +46,50 @@ vector<Edge> kruskal(
     int N,                                  // number of vertices
     const vector<vector<int> > & adjlists)  // adjacency lists
 {
-    // WRITE THIS!!!
-    return vector<Edge>();  // Dummy return
+    assert (N >= 1);
+    assert (wgraph.size() == size_t(N*N));
+    assert (adjlists.size() == size_t(N));
+
+    // Make list of edges
+    vector<Edge> edges;
+    for (int i = 0; i < N; ++i)
+    {
+        for (auto v : adjlists[i])
+        {
+            if (v > i)
+                edges.push_back(Edge(i, v));
+        }
+    }
+
+    // List of edges -> sorted list of edges
+    sort(edges.begin(), edges.end(),
+        [&](const Edge & a, const Edge & b)
+        { return wgraph[a.first*N+a.second]
+               < wgraph[b.first*N+b.second]; });
+
+    // Make union-find structure with one blob for each vertex
+    UnionFind uf;
+    for (int i = 0; i < N; ++i)
+    {
+        uf.makeSet(i);
+    }
+
+    // Make tree from cheapest N-1 edges that do not create cycle
+    vector<Edge> tree;          // Edges in tree
+    for (auto e : edges)
+    {
+        if (uf.find(e.first) == uf.find(e.second))
+            continue;
+
+        // Add new edge to tree & do union
+        tree.push_back(e);
+        if (tree.size() == size_t(N-1))
+            break;  // An easy optimization
+        uf.unionx(e.first, e.second);
+    }
+
+    // Done
+    return tree;
 }
 
 
