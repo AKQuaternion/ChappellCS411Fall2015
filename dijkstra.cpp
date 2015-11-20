@@ -1,6 +1,6 @@
-// dijkstra.cpp  UNFINISHED
+// dijkstra.cpp
 // Glenn G. Chappell
-// 16 Nov 2015
+// 18 Nov 2015
 //
 // For CS 411/611 Fall 2015
 // Dijkstra's Algorithm
@@ -18,7 +18,10 @@ using std::vector;
 using std::size_t;
 #include <utility>
 using std::pair;
-using std::make_pair;
+#include <tuple>
+using std::tuple;
+using std::make_tuple;
+using std::get;
 #include <queue>
 using std::priority_queue;
 #include <cassert>  // for assert
@@ -39,16 +42,77 @@ typedef pair<int, int> Edge;    // Type for edge of graph
 // dijkstra
 // Solve single-source shortest-path problem using Dijkstra's Algorithm.
 // Given weighted graph (represented as discussed above), order of
-// graph, adjacency lists, and start vertex. Return value is pair
-// holding (1) edges of shortest-path tree, (2) vertex distances.
-pair<vector<Edge>, vector<int> > dijkstra(
+// graph, adjacency lists, and start vertex. Return value is tuple
+// holding (1) edges of shortest-path tree, (2) vertex distances, (3)
+// predecessor of each vertex, on the shortest path to it.
+tuple<vector<Edge>, vector<int>, vector<int> > dijkstra(
     const vector<int> & wgraph,             // weights
     int N,                                  // number of vertices
     const vector<vector<int> > & adjlists,  // adjacency lists
     int start)                              // index of start vertex
 {
-    // WRITE THIS!!!
-    return make_pair(vector<Edge>(), vector<int>());  // Dummy return
+    assert (N >= 1);
+    assert (wgraph.size() == size_t(N*N));
+    assert (0 <= start && start < N);
+    assert (adjlists.size() == size_t(N));
+
+    vector<int> reached(N, 0);  // item i is 1 if vert i reached, else 0
+    vector<int> dist(N, INF);   // dist[v] is length of shortest path
+                                //  from start to v; INF if none known
+    vector<int> pred(N, -1);    // pred[v] is predecessor of v in
+                                //  shortest path from start to v; (-1)
+                                //  if no predecessor.
+    vector<Edge> tree;          // Edges in tree
+
+    // Make priority queue of edges; top edge is one of least weight
+
+    // Comparison function for priority queue
+    auto comp = [&](const Edge & a, const Edge & b)  // Comparison func
+    {
+        // Get modified weight of edge a, edge b
+        auto wta = wgraph[a.first*N+a.second] + dist[a.first];
+        auto wtb = wgraph[b.first*N+b.second] + dist[b.first];
+        return wtb < wta;       // Compare reversed to get smallest
+    };
+    // The priority queue itself
+    priority_queue<Edge, vector<Edge>, decltype(comp)> pq(comp);
+
+    // Handle start vertex
+    dist[start] = 0;
+    reached[start] = 1;
+    for (auto v : adjlists[start])
+    {
+        if (!reached[v])
+            pq.push(Edge(start, v));
+    }
+
+    // Repeat until done with all edges
+    while (!pq.empty())
+    {
+        // Get least-weight edge from reached to unreached vertex
+        auto e = pq.top();
+        pq.pop();
+        auto u = e.second;
+        if (reached[u])
+            continue;
+        auto t = e.first;
+
+        // Handle new edge (e) & vertex (u)
+        tree.push_back(e);
+        dist[u] = wgraph[t*N + u] + dist[t];
+        pred[u] = t;
+        if (tree.size() == size_t(N-1))
+            break;  // An easy optimization
+        reached[u] = 1;
+        for (auto v : adjlists[u])
+        {
+            if (!reached[v])
+                pq.push(Edge(u, v));
+        }
+    }
+
+    // Done
+    return make_tuple(tree, dist, pred);
 }
 
 
@@ -147,10 +211,11 @@ int main()
 
     // Run Dijkstra's Algorithm & print result
     cout << "Running Dijkstra's Algorithm" << endl;
-    pair<vector<Edge>, vector<int> > p;
-    p = dijkstra(wgraph, N, adjlists, 0);
-    auto tree = p.first;
-    auto dist = p.second;
+    tuple<vector<Edge>, vector<int>, vector<int> > result;
+    result = dijkstra(wgraph, N, adjlists, 0);
+    auto tree = get<0>(result);
+    auto dist = get<1>(result);
+    auto pred = get<2>(result);
     cout << "Edges in single-source shortest-path tree:" << endl;
     if (tree.size() == 0)
         cout << "[NONE]" << endl;
@@ -167,6 +232,17 @@ int main()
             cout << "--";
         else
             cout << dist[i];
+        cout << endl;
+    }
+    cout << endl;
+    cout << "Predecessor vertices:" << endl;
+    for (int i = 0; size_t(i) < pred.size(); ++i)
+    {
+        cout << i << ": ";
+        if (pred[i] == -1)
+            cout << "--";
+        else
+            cout << pred[i];
         cout << endl;
     }
     cout << endl;
