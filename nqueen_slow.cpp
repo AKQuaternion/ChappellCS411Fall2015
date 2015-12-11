@@ -17,8 +17,7 @@ using std::string;
 using std::getline;
 #include <sstream>
 using std::istringstream;
-#include <cstdlib>
-using std::exit;
+#include <cstddef>
 using std::size_t;
 
 
@@ -31,10 +30,11 @@ typedef vector<int> BoardType;  // Holds queen loc's on a chessboard
 // chessboard (at most n rows). There is at most one queen per row. Its
 // position (column) is given by a number from 0 to n-1, inclusive.
 //
-// For example, a Board holding 1, 3, with n = 4 means a 4 x 4 chessboard
-// with queens in its first 2 rows. The queen in the row 0 (1st row) lies
-// in column 1 (the 2nd square), and the queen in row 1 (2nd row) lies in
-// column 3 (the 4th & last square). This is pictured below:
+// For example, a Board holding 1, 3, with n = 4 means a 4 x 4
+// chessboard with queens in its first 2 rows. The queen in the row 0
+// (1st row) lies in column 1 (the 2nd square), and the queen in row 1
+// (2nd row) lies in column 3 (the 4th & last square). This is pictured
+// below:
 //
 // +---+---+---+---+
 // |   | Q |   |   |
@@ -47,8 +47,8 @@ typedef vector<int> BoardType;  // Holds queen loc's on a chessboard
 // +---+---+---+---+
 //
 // We print a queen arrangement by printing the position of the queen in
-// each column. For example, "1 3 0 2" represents the following arrangement
-// of queens on a 4x4 chessboard:
+// each column. For example, "1 3 0 2" represents the following
+// arrangement of queens on a 4x4 chessboard:
 //
 // +---+---+---+---+
 // |   | Q |   |   |
@@ -62,15 +62,18 @@ typedef vector<int> BoardType;  // Holds queen loc's on a chessboard
 
 
 // printBoard
-// Given a full solution to the n-Queens Problem, print it, as described
-//  above.
+// Given a full solution to the n-Queens Problem (see above), print it
+// to cout as a list of numbers, giving the column numbers (0 .. n-1) of
+// queens in successive rows. Numbers are separated by blanks,
+// terminated by a newline.
 // Pre:
 //     n > 0
 //     board.size() == n
 //     Each entry of board is in [0, n-1].
-//     board, n represent a full solution to the n-Queens Problem (see above).
+//     board, n represent a full solution to the n-Queens Problem (see
+//      above).
 // Post:
-//     board has been printed to cout.
+//     board has been printed to cout, as above.
 void printBoard(const BoardType & board,
                 int n)
 {
@@ -85,10 +88,11 @@ void printBoard(const BoardType & board,
 
 
 // checkQueen
-// Given a partial solution to the n-Queens Problem (see above), determine
+// Given a partial solution to the n-Queens Problem (see above) in which
+//  the already placed queens cannot attack each other, determine
 //  whether a proposed new queen placement is acceptable, that is, if it
-//  cannot attack any any of the existing queens. If there is no possible
-//  attack, then the return value is true.
+//  cannot attack any any of the existing queens. Return value is true
+//  if there is no possible attack.
 // Pre:
 //     board represents a placement of non-attacking queens on an n x n
 //      chessboard (see above).
@@ -120,32 +124,32 @@ bool checkQueen(const BoardType & board,
         if (newRow + newCol == oldRow + oldCol)
             return false;
 
-        // NOTE: We do not need to check for horizontal attacks because of
-        //  the assumption that there is at most one queen in each row.
+        // NOTE: We do not need to check for horizontal attacks, since
+        //  there is at most one queen in each row.
     }
     return true;
 }
 
 
 // nQueen_recurse
-// Given a partial solution to the n-Queens Problem (see above), print out
-// all non-attacking placements of n queens that include the given queens.
-// Return number of placements.
+// Given a partial solution to the n-Queens Problem (see above), print
+// out all non-attacking placements of n queens that include the given
+// queens. Return number of placements.
 // Recursive.
 // Pre:
 //     n > 0.
 //     board.size() <= n.
 //     Each entry of board is in [0 .. n-1].
-//     board represents a placement of non-attacking queens on an n x n
-//      chessboard (see above).
+//     board represents a placement of queens on an n x n chessboard
+//      (see above).
 // Post:
 //     All solutions have been printed (see above).
 //     b is equal to the value of b when the function was called.
 int nQueen_recurse(BoardType & board,
                    int n)
-// NOTE: We can pass b by reference since the function always restores it
-//  to the same state it was in when the function was called. Because the
-//  correct execution of the function depends on this fact, it is a
+// NOTE: We can pass b by reference since the function always restores
+//  it to the same state it was in when the function was called. Because
+//  the correct execution of the function depends on this fact, it is a
 //  postcondition.
 {
     // BASE CASE
@@ -168,7 +172,7 @@ int nQueen_recurse(BoardType & board,
     int total = 0;
     for (int newCol = 0; newCol < n; ++newCol)
     {
-        // Add a queen in position newColumn in the next row & recurse.
+        // Add a queen in position newCol in the next row & recurse.
         board.push_back(newCol);            // Add new queen
         total += nQueen_recurse(board, n);  // Recursive call
         board.pop_back();                   // Remove queen
@@ -196,7 +200,7 @@ int nQueen(int n)
 // getNum
 // Prints prompt to cout and then inputs a number of type int on a line
 // from cin. Repeats until valid number obtained; returns it to caller
-// in reference argument. Return value is false if number could not be
+// in reference argument. Return is false if number could not be
 // obtained.
 bool getNum(const string & prompt,
             int & num)
@@ -222,10 +226,9 @@ bool getNum(const string & prompt,
 }
 
 
-// main
+// Main program
 // Repeatedly inputs a number n and prints all n-Queen solutions.
 // Terminates on n == 0.
-// Uses inputLoop.
 int main()
 {
     // Print header
