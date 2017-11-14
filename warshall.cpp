@@ -16,6 +16,7 @@ using std::vector;
 #include <cstdlib>
 using std::size_t;
 
+using AdjacencyMatrix = vector<vector<int>>;
 
 // warshall
 // Given the adjacency matrix of a digraph, computes the adjacency
@@ -33,8 +34,7 @@ using std::size_t;
 // Post:
 //     Considering adjmat[..] as an adjacency matrix (see above),
 //      adjacency matrix of transitive closure lies in return value.
-vector<int> warshall(const vector<int> & adjmat,
-                     size_t N)
+AdjacencyMatrix warshall(const AdjacencyMatrix & adjmat)
 {
     // d: temporary storage
     // Item i,j in adjacency matrix k is stored in d[k*n*n + i*n + j].
@@ -43,27 +43,20 @@ vector<int> warshall(const vector<int> & adjmat,
     //  numbered less than k.
     // NOTE: This numbering scheme is slightly different from that in
     //  the Levitin text.
-    vector<int> d((N+1)*N*N);
-
+    const auto N = adjmat.size();
+    vector<AdjacencyMatrix> d(N+1,AdjacencyMatrix(N,vector<int>(N)));
+    
     // Copy adjacency matrix to d
-    for (size_t i = 0; i < N; ++i)
-        for (size_t j = 0; j < N; ++j)
-            d[0*N*N + i*N + j] = adjmat[i*N + j];
-
+    d[0] = adjmat;
+    
     // Run Warshall's Algorithm
     for (size_t k = 1; k <= N; ++k)
         for (size_t i = 0; i < N; ++i)
             for (size_t j = 0; j < N; ++j)
-                d[k*N*N + i*N + j] =
-                    d[(k-1)*N*N + i*N + j] ||
-                   (d[(k-1)*N*N + i*N + (k-1)] && d[(k-1)*N*N + (k-1)*N + j]);
-
+                d[k][i][j] = d[k-1][i][j] || (d[k-1][i][k] && d[k-1][k][j]);
+    
     // Copy final matrix to storage for result and return it
-    vector<int> result(N*N);
-    for (size_t i = 0; i < N; ++i)
-        for (size_t j = 0; j < N; ++j)
-            result[i*N + j] = d[N*N*N + i*N + j];
-    return result;
+    return d[N];
 }
 
 
@@ -71,14 +64,13 @@ vector<int> warshall(const vector<int> & adjmat,
 // Given a matrix stored in a vector, with the (i,j) entry stored in
 // matrix[i*numcols+j], print the matrix, entries separated by blanks,
 // rows ending with newline.
-void printMatrix(const vector<int> & matrix,
-                 size_t numcols)
+void printMatrix(AdjacencyMatrix & matrix)
 {
-    for (size_t row = 0; (row+1)*numcols-1 < matrix.size(); ++row)
+    for (const auto &row:matrix)
     {
-        for (size_t col = 0; col < numcols; ++col)
+        for (auto e:row)
         {
-            cout << setw(3) << matrix[row*numcols+col] << " ";
+            cout << setw(3) << e << " ";
         }
         cout << endl;
     }
@@ -90,33 +82,33 @@ void printMatrix(const vector<int> & matrix,
 int main()
 {
     const size_t N = 5;  // Number of vertices of digraph
-
+    
     // Set up adjacency matrix of digraph
-    vector<int> adjmat(N*N, 0);
-    adjmat[0*N + 1] = 1;
-    adjmat[1*N + 0] = 1;
-    adjmat[1*N + 4] = 1;
-    adjmat[1*N + 3] = 1;
-    adjmat[4*N + 2] = 1;
-    adjmat[4*N + 3] = 1;
-
+    AdjacencyMatrix adjmat(N,vector<int>(N,0));
+    adjmat[0][1] = 1;
+    adjmat[1][0] = 1;
+    adjmat[1][4] = 1;
+    adjmat[1][3] = 1;
+    adjmat[4][2] = 1;
+    adjmat[4][3] = 1;
+    
     // Print original adjacency matrix
     cout << "Original digraph:" << endl;
-    printMatrix(adjmat, N);
+    printMatrix(adjmat);
     cout << endl;
-
+    
     // Compute transitive closure
-    vector<int> result = warshall(adjmat, N);
-
+    auto result = warshall(adjmat);
+    
     // Print transitive closure
     cout << "Transitive closure:" << endl;
-    printMatrix(result, N);
+    printMatrix(result);
     cout << endl;
-
+    
     // Wait for user
     cout << "Press ENTER to quit ";
     while (cin.get() != '\n') ;
-
+    
     return 0;
 }
 
